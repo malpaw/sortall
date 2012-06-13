@@ -15,7 +15,8 @@ _Bool checkDrive(char* pszDrive)
 	int len = strlen(pszDrive);
 	if (len == 2) // A:, B: etc.
 	{
-		if (*pszDrive >= 'A' && *pszDrive <= 'Z'
+		if (((*pszDrive >= 'A' && *pszDrive <= 'Z')
+				|| (*pszDrive >= '1' && *pszDrive <= '9'))
 				&& *++pszDrive == ':')
 		{
 			return true;
@@ -64,20 +65,20 @@ _Bool checkDirection(char* pszDirection)
 	return false;
 }
 
-char checkArgs(char argc, char** argv)
+_Bool checkArgs(char argc, char** argv)
 {
 	switch (argc)
 	{
 	case 2:
 		if (checkDrive(argv[1]))
 		{
-			return 0;
+			return true;
 		}
 		break;
 	case 3:
 		if (checkDrive(argv[1]) && checkDirection(argv[2]))
 		{
-			return 0;
+			return true;
 		}
 		break;
 	}
@@ -89,5 +90,5 @@ char checkArgs(char argc, char** argv)
 	printf("       /S - sort by size\n");
 	printf("       /D - sort by date\n");
 	printf("       /X - reverse sort\n\n");
-	return -1;
+	return false;
 }

@@ -12,16 +12,14 @@
 
 char main(char argc, char** argv)
 {
-	int retCode;
 	char* pDirection;
 
 	POKE(0x0052, 0x02); // set LMARGIN=2
 	putchar('\n');
 
-	retCode = checkArgs(argc, argv);
-	if (!retCode)
+	if (!checkArgs(argc, argv))
 	{
-		return retCode;
+		return -1;
 	}
 
 	// arguments checked, carry on

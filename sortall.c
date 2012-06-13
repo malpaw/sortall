@@ -9,5 +9,5 @@
 
 void sortAll(char* pszDrive, char* pszDirection)
 {
-
+	printf("drive: '%s', sort: '%s'\n", pszDrive, pszDirection);
 }
