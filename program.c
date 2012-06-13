@@ -7,11 +7,13 @@
 
 #include <stdio.h>
 #include <peekpoke.h>
+#include "argscheck.h"
 #include "sortall.h"
 
 char main(char argc, char** argv)
 {
 	int retCode;
+	char* pDirection;
 
 	POKE(0x0052, 0x02); // set LMARGIN=2
 	putchar('\n');
@@ -22,5 +24,7 @@ char main(char argc, char** argv)
 		return retCode;
 	}
 
-	// arguments parsed, carry on
+	// arguments checked, carry on
+	pDirection = (argc == 2) ? "/N" : argv[2];
+	sortAll(argv[1], pDirection);
 }

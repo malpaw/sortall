@@ -8,6 +8,6 @@
 #ifndef SORTALL_H_
 #define SORTALL_H_
 
-char checkArgs(char argc, char** argv);
+void sortAll(char* pszDrive, char* pszDirection);
 
 #endif /* SORTALL_H_ */
