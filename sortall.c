@@ -6,8 +6,17 @@
  */
 
 #include <stdio.h>
+#include "sparta.h"
+
 
 void sortAll(char* pszDrive, char* pszDirection)
 {
-	printf("drive: '%s', sort: '%s'\n", pszDrive, pszDirection);
+	unsigned file_p;
+
+	sparta_init();
+
+	//printf("drive: '%s', sort: '%s'\n", pszDrive, pszDirection);
+
+	//sparta_call("FFIRST")
+	//file_p = sparta_getattr("FILE_P");
 }
