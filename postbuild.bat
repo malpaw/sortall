@@ -1,0 +1,1 @@
+copy *.com C:\Users\albeert\Documents\atari800hdd\
