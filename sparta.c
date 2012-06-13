@@ -7,7 +7,9 @@
 
 //#include <6502.h>
 
-//#include "sparta.h"
+#include "sparta.h"
+
+#include <stdio.h>
 
 #define FSYMBOL (0x07EB)
 
@@ -22,16 +24,22 @@ char* setName(char* pszName)
 	char* psn = pszSymbolName;
 	int i = 8;
 
+	printf("setName '%s'\n", pszName);
+
+
 	while (*psn++ = *pszName++)
 	{
 		--i;
 	}
-	++i; // clear zero
+	--psn; // go one character back to clear terminating zero
 	while (i--)
 	{
 		*psn++ = ' '; // fill with spaces
 	}
 	*psn = 0; // set zero after 8 characters
+
+	printf("symbolName: '%s'\n", pszSymbolName);
+
 	return pszSymbolName;
 }
 
