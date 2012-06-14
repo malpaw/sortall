@@ -19,11 +19,20 @@
 
 // private:
 
-void printDirInfo(struct DirInfo* pDirInfo)
+void printIndent(int i)
+{
+	while (i--)
+	{
+		putchar(' ');
+	}
+}
+
+void printDirInfo(struct DirInfo* pDirInfo, int indent)
 {
 	while (pDirInfo)
 	{
-		printf(": %s\n", pDirInfo->pszName);
+		printIndent(indent);
+		printf("%s\n", pDirInfo->pszName);
 		pDirInfo = pDirInfo->pNextEntry;
 	}
 }
@@ -99,6 +108,32 @@ struct DirInfo* getDirInfo(char* pszFolder)
 	return pFirstEntry;
 }
 
+
+void printDirTree(char* pszRoot, int indent)
+{
+	struct DirInfo* pDirInfo;
+	struct DirInfo* pDirEntry;
+	char* pszPath = malloc(COMMANDLINE_LIMIT);
+	strcpy(pszPath, pszRoot);
+	strcat(pszPath, "\\*.*");
+
+	pDirEntry = pDirInfo = getDirInfo(pszPath);
+	while (pDirEntry)
+	{
+		printIndent(indent);
+		printf("%s (%s)\n", pDirEntry->pszName, pszRoot);
+
+		strcpy(pszPath, pszRoot);
+		strcat(pszPath, "\\");
+		strcat(pszPath, pDirEntry->pszName);
+		printDirTree(pszPath, indent + 2);
+		pDirEntry = pDirEntry->pNextEntry;
+	}
+
+	deleteDirInfo(pDirInfo);
+	free(pszPath);
+}
+
 // public:
 
 void sortAll(char* pszDrive, char* pszDirection)
@@ -107,9 +142,12 @@ void sortAll(char* pszDrive, char* pszDirection)
 
 	sparta_init();
 
-	pDirInfo = getDirInfo("A:\\TMP\\*.*");
 
-	printDirInfo(pDirInfo);
-
-	deleteDirInfo(pDirInfo);
+	printDirTree(pszDrive, 0);
+//
+//	pDirInfo = getDirInfo("A:\\*.*");
+//
+//	printDirInfo(pDirInfo, 4);
+//
+//	deleteDirInfo(pDirInfo);
 }

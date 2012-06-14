@@ -7,12 +7,6 @@
 
 #ifndef DIRINFO_H_
 #define DIRINFO_H_
-//
-//struct DirEntry
-//{
-//	char pszName[13];
-//	struct DirEntry* pNextEntry;
-//};
 
 struct DirInfo
 {

@@ -10,7 +10,6 @@
 
 #include <stdio.h>
 
-#define COMMANDLINE_LIMIT (63)
 
 
 FILE* popen(char* command, char* mode);
