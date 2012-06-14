@@ -46,17 +46,14 @@ struct DirInfo* getDirInfo(char* pszFolder)
 	struct regs* pRegs;
 	char* pcRead;
 	char* pcWrite;
-	struct DirInfo* pDirInfo;
+	struct DirInfo* pFirstEntry = 0;
+	struct DirInfo* pDirInfo = 0;
 	struct DirInfo* pPrevEntry = 0;
 
 	vFolderName = sparta_getVector(SYMBOL_FILE_P);
 
 	*(void**)vFolderName = pszFolder;
 	POKE(FATR1, 0x08); // folders only
-
-	//pDirInfo = new(DirInfo);
-	//strcpy(pDirInfo->pszRoot, pszFolder);
-	//pPrevEntry = pDirInfo->pNextEntry;
 
 	pRegs = sparta_call(SYMBOL_FFIRST);
 	while (!(pRegs->flags & F6502_N))
@@ -66,6 +63,10 @@ struct DirInfo* getDirInfo(char* pszFolder)
 		if (pPrevEntry)
 		{
 			pPrevEntry->pNextEntry = pDirInfo;
+		}
+		if (!pFirstEntry)
+		{
+			pFirstEntry = pDirInfo;
 		}
 		pPrevEntry = pDirInfo;
 		pcWrite = pDirInfo->pszName;
@@ -95,7 +96,7 @@ struct DirInfo* getDirInfo(char* pszFolder)
 	}
 	sparta_call(SYMBOL_FCLOSE);
 
-	return pDirInfo;
+	return pFirstEntry;
 }
 
 // public:
