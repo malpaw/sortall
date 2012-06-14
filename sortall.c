@@ -16,7 +16,8 @@ void sortAll(char* pszDrive, char* pszDirection)
 {
 	unsigned file_p;
 	char* pszFolder = "A:\\*.*";
-	struct regs sys_params;
+	struct regs* pRegs;
+	char* c;
 
 	sparta_init();
 
@@ -29,15 +30,30 @@ void sortAll(char* pszDrive, char* pszDirection)
 
 	*(void**)file_p = pszFolder;
 	POKE(FATR1, 0x08); // folders only
-	POKE(FMODE, 0x0B); // result format
+	//POKE(FMODE, 0x0B); // result format
 
-	sparta_call(SYMBOL_FDOPEN);
-	sys_params.pc = sparta_getVector(SYMBOL_FDGETC);
-	while (_sys(&sys_params), !(sys_params.flags & F6502_N))
+	pRegs = sparta_call(SYMBOL_FFIRST);
+
+	while (!(pRegs->flags & F6502_N))
 	{
-		putchar(sys_params.a);
+		c = (char*)(DIRBUF + 6);
+		while (*c != ' ')
+		{
+			putchar(*c++);
+		}
+		putchar('\n');
+		sparta_call(SYMBOL_FNEXT);
 	}
-	sparta_call(SYMBOL_FDCLOSE);
+
+	sparta_call(SYMBOL_FCLOSE);
+
+//	sys_params.pc = sparta_getVector(SYMBOL_FDGETC);
+//	while (_sys(&sys_params), !(sys_params.flags & F6502_N))
+//	{
+//		putchar(sys_params.a);
+//	}
+//	sparta_call(SYMBOL_FDCLOSE);
 
 	//printf("dirbuf: %s", *(char**)DIRBUF);
+
 }

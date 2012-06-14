@@ -60,9 +60,10 @@ unsigned sparta_getVector(char* pszName)
 	return sparta_sys_params.x * 0x100 + sparta_sys_params.a;
 }
 
-void sparta_call(char* pszName)
+struct regs* sparta_call(char* pszName)
 {
 	sparta_sys_params.pc = sparta_getVector(pszName);
 	_sys(&sparta_sys_params);
+	return &sparta_sys_params;
 }
 
