@@ -16,10 +16,6 @@
 #define SYMBOL_FDGETC    ("FDGETC  ")
 #define SYMBOL_FDCLOSE   ("FDCLOSE ")
 
-#define FMODE   (0x0778)
-#define FATR1   (0x0779)
-#define DIRBUF  (0x0789)
-
 void sparta_init();
 unsigned sparta_getVector(char* pszName);
 void sparta_call(char* pszName);

@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <peekpoke.h>
 #include <6502.h>
+#include "memmap.h"
 #include "sparta.h"
 
 
@@ -28,7 +29,7 @@ void sortAll(char* pszDrive, char* pszDirection)
 
 	*(void**)file_p = pszFolder;
 	POKE(FATR1, 0x08); // folders only
-	POKE(FMODE, 0x80); // result format
+	POKE(FMODE, 0x0B); // result format
 
 	sparta_call(SYMBOL_FDOPEN);
 	sys_params.pc = sparta_getVector(SYMBOL_FDGETC);

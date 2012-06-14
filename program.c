@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <peekpoke.h>
+#include "memmap.h"
 #include "argscheck.h"
 #include "sortall.h"
 
@@ -14,7 +15,7 @@ char main(char argc, char** argv)
 {
 	char* pDirection;
 
-	POKE(0x0052, 0x02); // set LMARGIN=2
+	POKE(LMARGIN, 0x02); // set LMARGIN=2
 	putchar('\n');
 
 	if (!checkArgs(argc, argv))
