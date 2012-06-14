@@ -26,6 +26,7 @@
 #define SYMBOL_FILE_P    ("FILE_P  ")
 #define SYMBOL_DIVIO     ("DIVIO   ")
 #define SYMBOL_XDIVIO    ("XDIVIO  ")
+#define SYMBOL_PUT_V     ("PUT_V   ")
 
 void sparta_init();
 unsigned sparta_getVector(char* pszName);
