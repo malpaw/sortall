@@ -16,7 +16,6 @@
 
 #define new(s) ((struct s*) malloc(sizeof(struct s)))
 
-
 // private:
 
 //void printIndent(int i)
@@ -135,12 +134,12 @@ struct DirInfo* getDirInfo(char* pszFolder)
 	return pFirstEntry;
 }
 
-void sortDir(char* pszPath)
+void sortDir(char* pszPath, void* pParam)
 {
-	printf("-- %s\n", pszPath);
+	printf("-- %s, %s\n", pszPath, (char*)pParam);
 }
 
-void processDirTree(char* pszRoot, void(*fCallback)(char*))
+void processDirTree(char* pszRoot, void(*fCallback)(char*, void*), void* pParam)
 {
 	struct DirInfo* pDirInfo;
 	struct DirInfo* pDirEntry;
@@ -154,8 +153,8 @@ void processDirTree(char* pszRoot, void(*fCallback)(char*))
 		strcpy(pszPath, pszRoot);
 		strcat(pszPath, "\\");
 		strcat(pszPath, pDirEntry->pszName);
-		fCallback(pszPath);                     // *******
-		processDirTree(pszPath, fCallback);
+		fCallback(pszPath, pParam);                     // *******
+		processDirTree(pszPath, fCallback, pParam);
 		pDirEntry = pDirEntry->pNextEntry;
 	}
 
@@ -167,11 +166,11 @@ void processDirTree(char* pszRoot, void(*fCallback)(char*))
 
 void sortAll(char* pszDrive, char* pszDirection)
 {
-	struct DirInfo* pDirInfo;
+//	struct DirInfo* pDirInfo;
 
 	sparta_init();
 
-	processDirTree(pszDrive, sortDir);
+	processDirTree(pszDrive, sortDir, pszDirection);
 
 //	printDirTree(pszDrive, 0);
 //
