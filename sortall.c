@@ -143,7 +143,7 @@ void sortDir(char* pszPath, void* pParam)
 	strcat(pszCommand, "\\ ");
 	strcat(pszCommand, (void*)pParam);
 
-	printf("%s ", pszPath);
+	printf("%s\\ ", pszPath);
 	popen_uload(pszCommand, "NUL:");
 	printf("done. \n");
 }
