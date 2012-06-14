@@ -16,33 +16,59 @@
 
 #define new(s) ((struct s*) malloc(sizeof(struct s)))
 
-struct DirInfo* getDirInfo(char* pszRoot)
+
+// private:
+
+void printDirInfo(struct DirInfo* pDirInfo)
 {
-	unsigned file_p;
-	char* pszFolder = strcat(pszRoot, "\\*.*");
+	while (pDirInfo)
+	{
+		printf(": %s\n", pDirInfo->pszName);
+		pDirInfo = pDirInfo->pNextEntry;
+	}
+}
+
+void deleteDirInfo(struct DirInfo* pDirInfo)
+{
+	struct DirInfo* next;
+
+	while (pDirInfo)
+	{
+		next = pDirInfo->pNextEntry;
+		free(pDirInfo);
+		pDirInfo = next;
+	}
+}
+
+struct DirInfo* getDirInfo(char* pszFolder)
+{
+	unsigned vFolderName;
 	struct regs* pRegs;
 	char* pcRead;
 	char* pcWrite;
-	struct DirInfo* dirInfo;
-	struct DirEntry* dirEntry = 0;
-	struct DirEntry* dirPrevEntry = 0;
+	struct DirInfo* pDirInfo;
+	struct DirInfo* pPrevEntry = 0;
 
-	file_p = sparta_getVector(SYMBOL_FILE_P);
+	vFolderName = sparta_getVector(SYMBOL_FILE_P);
 
-	*(void**)file_p = pszFolder;
+	*(void**)vFolderName = pszFolder;
 	POKE(FATR1, 0x08); // folders only
 
-	dirInfo = new(DirInfo);
-	strcpy(dirInfo->pszRoot, pszFolder);
-	dirPrevEntry = dirInfo->pEntry;
+	//pDirInfo = new(DirInfo);
+	//strcpy(pDirInfo->pszRoot, pszFolder);
+	//pPrevEntry = pDirInfo->pNextEntry;
 
 	pRegs = sparta_call(SYMBOL_FFIRST);
 	while (!(pRegs->flags & F6502_N))
 	{
-		dirEntry = new(DirEntry);
-		dirEntry->pNextEntry = 0;
-		dirPrevEntry = dirEntry;
-		pcWrite = dirEntry->pszName;
+		pDirInfo = new(DirInfo);
+		pDirInfo->pNextEntry = 0;
+		if (pPrevEntry)
+		{
+			pPrevEntry->pNextEntry = pDirInfo;
+		}
+		pPrevEntry = pDirInfo;
+		pcWrite = pDirInfo->pszName;
 		pcRead = (char*)DIRBUF + 6; // name
 		while (*pcRead != ' ')
 		{
@@ -69,12 +95,20 @@ struct DirInfo* getDirInfo(char* pszRoot)
 	}
 	sparta_call(SYMBOL_FCLOSE);
 
-	return dirInfo;
+	return pDirInfo;
 }
+
+// public:
 
 void sortAll(char* pszDrive, char* pszDirection)
 {
+	struct DirInfo* pDirInfo;
+
 	sparta_init();
 
-	getDirInfo("A:\\TMP");
+	pDirInfo = getDirInfo("A:\\TMP\\*.*");
+
+	printDirInfo(pDirInfo);
+
+	deleteDirInfo(pDirInfo);
 }

@@ -7,17 +7,17 @@
 
 #ifndef DIRINFO_H_
 #define DIRINFO_H_
-
-struct DirEntry
-{
-	char pszName[13]; // 8.3+zero
-	struct DirEntry* pNextEntry;
-};
+//
+//struct DirEntry
+//{
+//	char pszName[13];
+//	struct DirEntry* pNextEntry;
+//};
 
 struct DirInfo
 {
-	char pszRoot[13]; // 8.3+zero
-	struct DirEntry* pEntry;
+	char pszName[13]; // 8.3+zero
+	struct DirInfo* pNextEntry;
 };
 
 #endif /* DIRINFO_H_ */
