@@ -34,32 +34,33 @@ void popen(char* pszCommand)
 
 /**
  * Launches SDX command using U_LOAD system call
- * @param pszCommand
+ * @param pszCommand - NULL=ignore redirection, -1=suppress output
  */
 void popen_uload(char *pszCommand, char* pszOutputFileName)
 {
 	struct regs r;
 	unsigned fOutputHandle;
-	//unsigned vFileP;
+	unsigned vFileP;
 	unsigned vPutV;
 	char cReturnCode = 0x60; // RTS assembler instruction
 	char hStdOut;
 
 	// redirect standard output
-	if (pszOutputFileName)
+	if ((int)pszOutputFileName == -1)
 	{
 		vPutV = sparta_getVector(SYMBOL_PUT_V);
 		*(void**)vPutV = &cReturnCode; // force PUT_V to do nothing
 		hStdOut = PEEK(COMTAB + 6);
 		POKE(COMTAB + 6, 100);
-
-
-//		vFileP = sparta_getVector(SYMBOL_FILE_P);
-//		*(void**)vFileP = (void*)100;//pszOutputFileName;
-//		r.y = 0x00; // redirect standard output;
-//		r.pc = sparta_getVector(SYMBOL_DIVIO);
-//		_sys(&r);
-//		fOutputHandle = PEEKW(FHANDLE);
+	}
+	else if (pszOutputFileName)
+	{
+		vFileP = sparta_getVector(SYMBOL_FILE_P);
+		*(char**) vFileP = pszOutputFileName;
+		r.y = 0x00; // redirect standard output;
+		r.pc = sparta_getVector(SYMBOL_DIVIO);
+		_sys(&r);
+		fOutputHandle = PEEKW(FHANDLE);
 	}
 
 	// clear BUFOFF
@@ -81,14 +82,16 @@ void popen_uload(char *pszCommand, char* pszOutputFileName)
 	// TODO: set trap!
 
 	// restore standard output
-	if (pszOutputFileName)
+	if ((int)pszOutputFileName == -1)
 	{
 		POKE(COMTAB + 6, hStdOut);
-
-//		POKEW(FHANDLE, fOutputHandle);
-//		r.y = 0x00; // restore standard output
-//		r.pc = sparta_getVector(SYMBOL_XDIVIO);
-//		_sys(&r);
+	}
+	else if (pszOutputFileName)
+	{
+		POKEW(FHANDLE, fOutputHandle);
+		r.y = 0x00; // restore standard output
+		r.pc = sparta_getVector(SYMBOL_XDIVIO);
+		_sys(&r);
 	}
 }
 

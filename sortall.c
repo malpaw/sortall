@@ -144,7 +144,7 @@ void sortDir(char* pszPath, void* pParam)
 	strcat(pszCommand, (void*)pParam);
 
 	printf("%s ", pszPath);
-	popen_uload(pszCommand, "NUL:");
+	popen_uload(pszCommand, "A:\\TMP\\DUPA.TXT");
 	printf("done. \n");
 }
 
