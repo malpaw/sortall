@@ -22,7 +22,7 @@ FILE* popen(char* pszCommand, char* pszMode)
 
 		// copy command to LBUF, end with new line character
 		strcpy(LBUF, pszCommand);
-		*(LBUF + strlen(pszCommand)) = '\n';
+		strcat(LBUF, "\n");
 
 		//  call XCOMLI
 		sparta_call(SYMBOL_XCOMLI);

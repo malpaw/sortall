@@ -26,9 +26,6 @@ void sparta_init()
 
 unsigned sparta_getVector(char* pszName)
 {
-	//setName(pszName); // fill spaces to 8 characters
-//	sparta_sys_params.a = (unsigned)pszSymbolName & 0xFF;
-//	sparta_sys_params.x = ((unsigned)pszSymbolName >> 8) & 0xFF;
 	sparta_sys_params.a = (unsigned)pszName & 0xFF;
 	sparta_sys_params.x = ((unsigned)pszName >> 8) & 0xFF;
 	sparta_sys_params.pc = FSYMBOL;

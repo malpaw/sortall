@@ -144,7 +144,7 @@ void sortDir(char* pszPath, void* pParam)
 	strcat(pszCommand, (void*)pParam);
 	strcat(pszCommand, " >>NUL");
 
-	printf("Sorting '%s' ", pszPath);
+	printf("Sorting %s ", pszPath);
 	popen(pszCommand, "r");
 	printf("done. \n");
 }
