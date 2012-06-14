@@ -15,30 +15,6 @@
 
 struct regs sparta_sys_params;
 unsigned sparta_fXcomli = 0;
-//char pszSymbolName[9];
-
-// private:
-
-//char* setName(char* pszName)
-//{
-//	char* psn = pszSymbolName;
-//	int i = 8;
-//
-//	while (*psn++ = *pszName++)
-//	{
-//		--i;
-//	}
-//	--psn; // go one character back to clear terminating zero
-//	while (i--)
-//	{
-//		*psn++ = ' '; // fill with spaces
-//	}
-//	*psn = 0; // set zero after 8 characters
-//
-//	return pszSymbolName;
-//}
-
-// public:
 
 /**
  * Finds XCOMLI symbol

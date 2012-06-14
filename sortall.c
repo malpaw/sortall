@@ -10,11 +10,13 @@
 #include <string.h>
 #include <peekpoke.h>
 #include <6502.h>
-#include "memmap.h"
 #include "sparta.h"
 #include "dirinfo.h"
+#include "shell.h"
 
 #define new(s) ((struct s*) malloc(sizeof(struct s)))
+
+char pszCommand[COMMANDLINE_LIMIT];
 
 // private:
 
@@ -136,7 +138,13 @@ struct DirInfo* getDirInfo(char* pszFolder)
 
 void sortDir(char* pszPath, void* pParam)
 {
-	printf("-- %s, %s\n", pszPath, (char*)pParam);
+	strcpy(pszCommand, "ECHO ");
+	strcat(pszCommand, pszPath);
+	strcat(pszCommand, " ");
+	strcat(pszCommand, (void*)pParam);
+
+	//printf("'%s'\n", pszCommand);
+	popen(pszCommand, "r");
 }
 
 void processDirTree(char* pszRoot, void(*fCallback)(char*, void*), void* pParam)
@@ -166,17 +174,6 @@ void processDirTree(char* pszRoot, void(*fCallback)(char*, void*), void* pParam)
 
 void sortAll(char* pszDrive, char* pszDirection)
 {
-//	struct DirInfo* pDirInfo;
-
 	sparta_init();
-
 	processDirTree(pszDrive, sortDir, pszDirection);
-
-//	printDirTree(pszDrive, 0);
-//
-//	pDirInfo = getDirInfo("A:\\*.*");
-//
-//	printDirInfo(pDirInfo, 4);
-//
-//	deleteDirInfo(pDirInfo);
 }

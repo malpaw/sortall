@@ -10,8 +10,6 @@
 
 #include <stdio.h>
 
-
-
 FILE* popen(char* command, char* mode);
 
 #endif /* SHELL_H_ */

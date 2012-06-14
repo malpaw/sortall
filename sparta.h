@@ -8,6 +8,9 @@
 #ifndef SPARTA_H_
 #define SPARTA_H_
 
+#include <peekpoke.h>
+#include "memmap.h"
+
 #define COMMANDLINE_LIMIT (63)
 
 #define SYMBOL_XCOMLI    ("XCOMLI  ")

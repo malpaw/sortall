@@ -1,4 +1,4 @@
-SOURCES = program.c argscheck.c sortall.c sparta.c
+SOURCES = program.c argscheck.c sortall.c sparta.c shell.c
 
 PROGRAM = sortall.com
 
