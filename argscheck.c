@@ -82,6 +82,7 @@ _Bool checkArgs(char argc, char** argv)
 		}
 		break;
 	}
+	printf("SORTALL v0.8.0\n");
 	printf("Sorts disk drive entries recursively.\n");
 	printf("Uses SORTDIR utility for SpartaDos X.\n");
 	printf("(c) 2012 uberFat\n\n");
