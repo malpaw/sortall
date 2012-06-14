@@ -21,6 +21,11 @@
 #define SYMBOL_FDOPEN    ("FDOPEN  ")
 #define SYMBOL_FDGETC    ("FDGETC  ")
 #define SYMBOL_FDCLOSE   ("FDCLOSE ")
+#define SYMBOL_U_GETPAR  ("U_GETPAR")
+#define SYMBOL_U_LOAD    ("U_LOAD  ")
+#define SYMBOL_FILE_P    ("FILE_P  ")
+#define SYMBOL_DIVIO     ("DIVIO   ")
+#define SYMBOL_XDIVIO    ("XDIVIO  ")
 
 void sparta_init();
 unsigned sparta_getVector(char* pszName);

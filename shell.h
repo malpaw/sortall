@@ -9,7 +9,9 @@
 #define SHELL_H_
 
 #include <stdio.h>
+#include <stdbool.h>
 
-FILE* popen(char* command, char* mode);
+void popen(char* command);
+void popen_uload(char* command, char* pszOutputFileName);
 
 #endif /* SHELL_H_ */

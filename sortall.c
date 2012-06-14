@@ -138,14 +138,13 @@ struct DirInfo* getDirInfo(char* pszFolder)
 
 void sortDir(char* pszPath, void* pParam)
 {
-	strcpy(pszCommand, "SORTDIR ");
+	strcpy(pszCommand, "SORTDIR.COM ");
 	strcat(pszCommand, pszPath);
 	strcat(pszCommand, "\\ ");
 	strcat(pszCommand, (void*)pParam);
-	strcat(pszCommand, " >>NUL");
 
-	printf("Sorting %s ", pszPath);
-	popen(pszCommand, "r");
+	printf("%s ", pszPath);
+	popen_uload(pszCommand, "NUL:");
 	printf("done. \n");
 }
 
