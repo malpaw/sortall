@@ -4,7 +4,7 @@ PROGRAM = sortall.com
 
 ifdef CC65_TARGET
 CC      = $(CC65_HOME)/bin/cl65.exe
-CFLAGS  = -t $(CC65_TARGET) --create-dep -O
+CFLAGS  = -t $(CC65_TARGET) --create-dep -O -Or
 LDFLAGS = -t $(CC65_TARGET) -m $(PROGRAM).map
 RM      = rm
 else
@@ -31,7 +31,7 @@ ifneq ($(MAKECMDGOALS),clean)
 endif
 
 %.o: %.c
-	$(CC) -c $(CFLAGS) -Or -o $@ $<
+	$(CC) -c $(CFLAGS) -o $@ $<
 	@$(MAKEDEPEND)
 
 $(PROGRAM): $(SOURCES:.c=.o)
