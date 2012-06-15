@@ -15,7 +15,7 @@ char main(char argc, char** argv)
 {
 	char* pDirection;
 
-	POKE(LMARGIN, 0x02); // set LMARGIN=2
+	POKE(LMARGN, 0x02); // set LMARGN=2
 	putchar('\n');
 
 	if (!checkArgs(argc, argv))
